@@ -522,7 +522,7 @@ $(function () {
         'Pics/Exco/IMG_0272.jpg',
         'Pics/Exco/IMG_0312.jpg',
         'Pics/Exco/WhatsApp Image 2026-07-20 at 9.17.09 PM.jpeg',
-        'Pics/Exco/WhatsApp Image 2026-07-20 at 9.17.09 PM.jpeg'
+        'Pics/Exco/WhatsApp Image 2026-09-10 at 2.55.40 PM.jpeg'
     ];
 
     function applyReviewBulletPhotos() {
@@ -1002,14 +1002,14 @@ $(function () {
 
         ***************************/
 
-        var menu = ['<div class="mil-custom-dot mil-slide-1"></div>', '<div class="mil-custom-dot mil-slide-2"></div>', '<div class="mil-custom-dot mil-slide-3"></div>', '<div class="mil-custom-dot mil-slide-4"></div>', '<div class="mil-custom-dot mil-slide-5"></div>', '<div class="mil-custom-dot mil-slide-6"></div>', '<div class="mil-custom-dot mil-slide-7"></div>']
+        var menu = ['<div class="mil-custom-dot mil-slide-1"></div>', '<div class="mil-custom-dot mil-slide-2"></div>', '<div class="mil-custom-dot mil-slide-3"></div>', '<div class="mil-custom-dot mil-slide-4"></div>', '<div class="mil-custom-dot mil-slide-5"></div>', '<div class="mil-custom-dot mil-slide-6"></div>', '<div class="mil-custom-dot mil-slide-7"></div>', '<div class="mil-custom-dot mil-slide-8"></div>']
         var mySwiper = new Swiper('.mil-reviews-slider', {
             // If we need pagination
             pagination: {
                 el: '.mil-revi-pagination',
                 clickable: true,
                 renderBullet: function (index, className) {
-                    return '<span class="' + className + '">' + (menu[index]) + '</span>';
+                    return '<span class="' + className + '">' + (menu[index] || '') + '</span>';
                 },
             },
             speed: 800,
