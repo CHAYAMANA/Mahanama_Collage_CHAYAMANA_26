@@ -525,6 +525,10 @@ $(function () {
         'Pics/Exco/WhatsApp Image 2026-09-10 at 2.55.40 PM.jpeg'
     ];
 
+    function renderReviewBullet(index, className) {
+        return '<span class="' + className + '"><span class="mil-custom-dot mil-slide-' + (index + 1) + '"></span></span>';
+    }
+
     function applyReviewBulletPhotos() {
         var bullets = document.querySelectorAll('.mil-revi-pagination .swiper-pagination-bullet');
         if (!bullets.length) return;
@@ -559,8 +563,7 @@ $(function () {
             el: '.mil-revi-pagination',
             clickable: true,
             renderBullet: function (index, className) {
-                var photo = reviewBulletPhotos[index % reviewBulletPhotos.length];
-                return '<span class="' + className + '"><span class="mil-custom-dot" style="background-image:url(\'' + encodeURI(photo) + '\'); background-size:cover; background-position:center; background-repeat:no-repeat; width:90px; height:90px; border-radius:50%; display:block;"></span></span>';
+                return renderReviewBullet(index, className);
             },
         },
         speed: 800,
@@ -1002,14 +1005,13 @@ $(function () {
 
         ***************************/
 
-        var menu = ['<div class="mil-custom-dot mil-slide-1"></div>', '<div class="mil-custom-dot mil-slide-2"></div>', '<div class="mil-custom-dot mil-slide-3"></div>', '<div class="mil-custom-dot mil-slide-4"></div>', '<div class="mil-custom-dot mil-slide-5"></div>', '<div class="mil-custom-dot mil-slide-6"></div>', '<div class="mil-custom-dot mil-slide-7"></div>', '<div class="mil-custom-dot mil-slide-8"></div>']
         var mySwiper = new Swiper('.mil-reviews-slider', {
             // If we need pagination
             pagination: {
                 el: '.mil-revi-pagination',
                 clickable: true,
                 renderBullet: function (index, className) {
-                    return '<span class="' + className + '">' + (menu[index] || '') + '</span>';
+                    return renderReviewBullet(index, className);
                 },
             },
             speed: 800,
@@ -1018,6 +1020,11 @@ $(function () {
             navigation: {
                 nextEl: '.mil-revi-next',
                 prevEl: '.mil-revi-prev',
+            },
+            on: {
+                init: function () {
+                    applyReviewBulletPhotos();
+                },
             },
         })
 
