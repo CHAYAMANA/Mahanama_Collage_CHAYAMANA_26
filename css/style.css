@@ -876,6 +876,11 @@ textarea {
 .mil-btn-space {
   margin-right: 30px;
 }
+.mil-competition-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
 @media screen and (max-width: 500px) {
   .mil-btn-space {
     margin-right: 50px;
