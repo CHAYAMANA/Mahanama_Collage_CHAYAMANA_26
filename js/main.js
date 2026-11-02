@@ -119,7 +119,7 @@ $(function () {
     anchor scroll
 
     ***************************/
-    $(document).on('click', 'a[href^="#"]', function (event) {
+    $(document).on('click', 'a[href^="#"]:not([data-native-anchor])', function (event) {
         event.preventDefault();
 
         var target = $($.attr(this, 'href'));
