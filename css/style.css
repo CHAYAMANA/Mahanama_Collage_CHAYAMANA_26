@@ -695,6 +695,12 @@ textarea {
 .mil-dark-bg {
   position: relative;
 }
+.mil-judge-section {
+  position: relative;
+  z-index: 4;
+  margin-top: -50px;
+  background-color: #fff;
+}
 .mil-dark-bg:before {
   content: "";
   width: 100%;
