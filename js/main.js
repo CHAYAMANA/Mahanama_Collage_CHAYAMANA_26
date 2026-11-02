@@ -119,6 +119,21 @@ $(function () {
     anchor scroll
 
     ***************************/
+    document.addEventListener('click', function (event) {
+        var link = event.target.closest('a[data-native-anchor][href="#rules"]');
+        var target = document.getElementById('rules');
+
+        if (!link || !target) {
+            return;
+        }
+
+        event.preventDefault();
+        target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }, true);
+
     $(document).on('click', 'a[href^="#"]:not([data-native-anchor])', function (event) {
         event.preventDefault();
 

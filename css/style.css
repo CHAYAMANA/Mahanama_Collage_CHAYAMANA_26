@@ -1197,7 +1197,21 @@ textarea {
     line-height: 1.6;
   }
   .mil-banner .mil-banner-content .mil-circle-text {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    right: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+  }
+  .mil-banner .mil-banner-content .mil-circle-text > .mil-ct-svg {
     display: none;
+  }
+  .mil-banner .mil-banner-content .mil-circle-text .mil-button {
+    width: 50px;
+    height: 50px;
+    padding: 10px;
   }
 }
 .mil-menu-btn {
@@ -1751,6 +1765,10 @@ textarea {
           align-items: center;
   width: 140px;
   height: 140px;
+  z-index: 4;
+  cursor: pointer;
+  touch-action: manipulation;
+  text-decoration: none;
 }
 .mil-circle-text .mil-ct-svg {
   -webkit-transform: scale(2);
