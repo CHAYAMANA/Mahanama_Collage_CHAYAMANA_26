@@ -44,92 +44,76 @@ $(function () {
 
     /***************************
 
-    preloader  (GSAP 3 syntax)
-
+    preloader
+    
     ***************************/
 
     var timeline = gsap.timeline();
 
     timeline.to(".mil-preloader-animation", {
-        opacity: 1
+        opacity: 1,
     });
 
-    timeline.fromTo(".mil-animation-1 .mil-h3", {
-        y: "30px",
-        opacity: 0
-    }, {
-        y: "0px",
-        opacity: 1,
-        stagger: 0.4
-    });
+    timeline.fromTo(
+        ".mil-animation-1 .mil-h3", {
+            y: "30px",
+            opacity: 0
+        }, {
+            y: "0px",
+            opacity: 1,
+            stagger: 0.4
+        },
+    );
 
     timeline.to(".mil-animation-1 .mil-h3", {
         opacity: 0,
-        y: -30
+        y: '-30',
     }, "+=.3");
 
-    timeline.fromTo(".mil-reveal-box", {
-        opacity: 0
+    timeline.fromTo(".mil-reveal-box", 0.1, {
+        opacity: 0,
     }, {
         opacity: 1,
-        x: -30,
-        duration: 0.1
+        x: '-30',
     });
 
-    timeline.to(".mil-reveal-box", {
+    timeline.to(".mil-reveal-box", 0.45, {
         width: "100%",
         x: 0,
-        duration: 0.45
     }, "+=.1");
-
     timeline.to(".mil-reveal-box", {
         right: "0"
     });
-
-    timeline.to(".mil-reveal-box", {
-        width: "0%",
-        duration: 0.3
+    timeline.to(".mil-reveal-box", 0.3, {
+        width: "0%"
     });
-
     timeline.fromTo(".mil-animation-2 .mil-h3", {
-        opacity: 0
-    }, {
-        opacity: 1
-    }, "-=.5");
-
-    timeline.to(".mil-animation-2 .mil-h3", {
         opacity: 0,
-        y: -30,
-        duration: 0.6
+    }, {
+        opacity: 1,
+    }, "-=.5");
+    timeline.to(".mil-animation-2 .mil-h3", 0.6, {
+        opacity: 0,
+        y: '-30'
     }, "+=.5");
-
-    timeline.to(".mil-preloader", {
+    timeline.to(".mil-preloader", 0.8, {
         opacity: 0,
         ease: 'sine',
-        duration: 0.8
     }, "+=.2");
-
-    timeline.fromTo(".mil-up", {
+    timeline.fromTo(".mil-up", 0.8, {
         opacity: 0,
         y: 40,
-        scale: .98
+        scale: .98,
+        ease: 'sine',
+
     }, {
         y: 0,
         opacity: 1,
         scale: 1,
-        ease: 'sine',
-        duration: 0.8,
         onComplete: function () {
             $('.mil-preloader').addClass("mil-hidden");
-        }
+        },
     }, "-=1");
-
-    /* Safety net: if anything in the timeline ever fails, never leave the
-       preloader covering the page (this is what made the site look unscrollable). */
-    setTimeout(function () {
-        $('.mil-preloader').addClass("mil-hidden");
-    }, 8000);
-
     /***************************
 
     anchor scroll
@@ -153,12 +137,7 @@ $(function () {
     $(document).on('click', 'a[href^="#"]:not([data-native-anchor])', function (event) {
         event.preventDefault();
 
-        var hash = $(this).attr('href');
-        if (!hash || hash.length < 2) return;      // plain "#" link: do nothing
-
-        var $target = $(hash);
-        if (!$target.length) return;               // target missing: no error
-
+        var target = $($.attr(this, 'href'));
         var offset = 0;
 
         if ($(window).width() < 1200) {
@@ -166,7 +145,7 @@ $(function () {
         }
 
         $('html, body').animate({
-            scrollTop: $target.offset().top - offset
+            scrollTop: target.offset().top - offset
         }, 400);
     });
     /***************************
@@ -257,7 +236,6 @@ $(function () {
         opacity: 1,
         ease: 'sine',
         scrollTrigger: {
-            id: 'global',
             trigger: "body",
             start: "top -40%",
             end: "top -40%",
@@ -266,7 +244,7 @@ $(function () {
     });
     /***************************
 
-    cursor  (GSAP 3 syntax)
+    cursor
 
     ***************************/
     const cursor = document.querySelector('.mil-ball');
@@ -288,8 +266,7 @@ $(function () {
     }
 
     $('.mil-drag, .mil-more, .mil-choose').mouseover(function () {
-        gsap.to($(cursor), {
-            duration: .2,
+        gsap.to($(cursor), .2, {
             width: 90,
             height: 90,
             opacity: 1,
@@ -298,8 +275,7 @@ $(function () {
     });
 
     $('.mil-drag, .mil-more, .mil-choose').mouseleave(function () {
-        gsap.to($(cursor), {
-            duration: .2,
+        gsap.to($(cursor), .2, {
             width: 20,
             height: 20,
             opacity: .1,
@@ -308,8 +284,7 @@ $(function () {
     });
 
     $('.mil-accent-cursor').mouseover(function () {
-        gsap.to($(cursor), {
-            duration: .2,
+        gsap.to($(cursor), .2, {
             background: accent,
             ease: 'sine',
         });
@@ -317,8 +292,7 @@ $(function () {
     });
 
     $('.mil-accent-cursor').mouseleave(function () {
-        gsap.to($(cursor), {
-            duration: .2,
+        gsap.to($(cursor), .2, {
             background: dark,
             ease: 'sine',
         });
@@ -326,88 +300,76 @@ $(function () {
     });
 
     $('.mil-drag').mouseover(function () {
-        gsap.to($('.mil-ball .mil-icon-1'), {
-            duration: .2,
+        gsap.to($('.mil-ball .mil-icon-1'), .2, {
             scale: '1',
             ease: 'sine',
         });
     });
 
     $('.mil-drag').mouseleave(function () {
-        gsap.to($('.mil-ball .mil-icon-1'), {
-            duration: .2,
+        gsap.to($('.mil-ball .mil-icon-1'), .2, {
             scale: '0',
             ease: 'sine',
         });
     });
 
     $('.mil-more').mouseover(function () {
-        gsap.to($('.mil-ball .mil-more-text'), {
-            duration: .2,
+        gsap.to($('.mil-ball .mil-more-text'), .2, {
             scale: '1',
             ease: 'sine',
         });
     });
 
     $('.mil-more').mouseleave(function () {
-        gsap.to($('.mil-ball .mil-more-text'), {
-            duration: .2,
+        gsap.to($('.mil-ball .mil-more-text'), .2, {
             scale: '0',
             ease: 'sine',
         });
     });
 
     $('.mil-choose').mouseover(function () {
-        gsap.to($('.mil-ball .mil-choose-text'), {
-            duration: .2,
+        gsap.to($('.mil-ball .mil-choose-text'), .2, {
             scale: '1',
             ease: 'sine',
         });
     });
 
     $('.mil-choose').mouseleave(function () {
-        gsap.to($('.mil-ball .mil-choose-text'), {
-            duration: .2,
+        gsap.to($('.mil-ball .mil-choose-text'), .2, {
             scale: '0',
             ease: 'sine',
         });
     });
 
     $('a:not(".mil-choose , .mil-more , .mil-drag , .mil-accent-cursor"), input , textarea, .mil-accordion-menu').mouseover(function () {
-        gsap.to($(cursor), {
-            duration: .2,
+        gsap.to($(cursor), .2, {
             scale: 0,
             ease: 'sine',
         });
-        gsap.to($('.mil-ball svg'), {
-            duration: .2,
+        gsap.to($('.mil-ball svg'), .2, {
             scale: 0,
         });
     });
 
     $('a:not(".mil-choose , .mil-more , .mil-drag , .mil-accent-cursor"), input, textarea, .mil-accordion-menu').mouseleave(function () {
-        gsap.to($(cursor), {
-            duration: .2,
+        gsap.to($(cursor), .2, {
             scale: 1,
             ease: 'sine',
         });
 
-        gsap.to($('.mil-ball svg'), {
-            duration: .2,
+        gsap.to($('.mil-ball svg'), .2, {
             scale: 1,
         });
     });
 
     $('body').mousedown(function () {
-        gsap.to($(cursor), {
-            duration: .2,
+        gsap.to($(cursor), .2, {
             scale: .1,
             ease: 'sine',
         });
     });
     $('body').mouseup(function () {
-        gsap.to($(cursor), {
-            duration: .2,
+        gsap.to($(cursor), .2, {
             scale: 1,
             ease: 'sine',
         });
@@ -442,7 +404,6 @@ $(function () {
         height: '100%',
         ease: 'sine',
         scrollTrigger: {
-            id: 'global',
             scrub: 0.3
         }
     });
@@ -631,6 +592,7 @@ $(function () {
         slidesPerView: 2,
         spaceBetween: 30,
         speed: 5000,
+        autoplay: true,
         autoplay: {
             delay: 0,
         },
@@ -654,8 +616,7 @@ $(function () {
         speed: 800,
         parallax: true,
         mousewheel: {
-            enabled: true,
-            releaseOnEdges: true
+            enable: true
         },
         navigation: {
             nextEl: '.mil-portfolio-next',
@@ -718,13 +679,6 @@ $(function () {
     ------------------------------------------------------------
     ----------------------------------------------------------*/
     document.addEventListener("swup:contentReplaced", function () {
-
-        /* kill only the old page's triggers (keep progress bar + back-to-top) */
-        ScrollTrigger.getAll().forEach(function (t) {
-            if (!t.vars || t.vars.id !== 'global') {
-                t.kill();
-            }
-        });
 
         $('html, body').animate({
             scrollTop: 0,
@@ -825,8 +779,7 @@ $(function () {
         ***************************/
 
         $('.mil-drag, .mil-more, .mil-choose').mouseover(function () {
-            gsap.to($(cursor), {
-                duration: .2,
+            gsap.to($(cursor), .2, {
                 width: 90,
                 height: 90,
                 opacity: 1,
@@ -835,8 +788,7 @@ $(function () {
         });
 
         $('.mil-drag, .mil-more, .mil-choose').mouseleave(function () {
-            gsap.to($(cursor), {
-                duration: .2,
+            gsap.to($(cursor), .2, {
                 width: 20,
                 height: 20,
                 opacity: .1,
@@ -845,8 +797,7 @@ $(function () {
         });
 
         $('.mil-accent-cursor').mouseover(function () {
-            gsap.to($(cursor), {
-                duration: .2,
+            gsap.to($(cursor), .2, {
                 background: accent,
                 ease: 'sine',
             });
@@ -854,8 +805,7 @@ $(function () {
         });
 
         $('.mil-accent-cursor').mouseleave(function () {
-            gsap.to($(cursor), {
-                duration: .2,
+            gsap.to($(cursor), .2, {
                 background: dark,
                 ease: 'sine',
             });
@@ -863,79 +813,80 @@ $(function () {
         });
 
         $('.mil-drag').mouseover(function () {
-            gsap.to($('.mil-ball .mil-icon-1'), {
-                duration: .2,
+            gsap.to($('.mil-ball .mil-icon-1'), .2, {
                 scale: '1',
                 ease: 'sine',
             });
         });
 
         $('.mil-drag').mouseleave(function () {
-            gsap.to($('.mil-ball .mil-icon-1'), {
-                duration: .2,
+            gsap.to($('.mil-ball .mil-icon-1'), .2, {
                 scale: '0',
                 ease: 'sine',
             });
         });
 
         $('.mil-more').mouseover(function () {
-            gsap.to($('.mil-ball .mil-more-text'), {
-                duration: .2,
+            gsap.to($('.mil-ball .mil-more-text'), .2, {
                 scale: '1',
                 ease: 'sine',
             });
         });
 
         $('.mil-more').mouseleave(function () {
-            gsap.to($('.mil-ball .mil-more-text'), {
-                duration: .2,
+            gsap.to($('.mil-ball .mil-more-text'), .2, {
                 scale: '0',
                 ease: 'sine',
             });
         });
 
         $('.mil-choose').mouseover(function () {
-            gsap.to($('.mil-ball .mil-choose-text'), {
-                duration: .2,
+            gsap.to($('.mil-ball .mil-choose-text'), .2, {
                 scale: '1',
                 ease: 'sine',
             });
         });
 
         $('.mil-choose').mouseleave(function () {
-            gsap.to($('.mil-ball .mil-choose-text'), {
-                duration: .2,
+            gsap.to($('.mil-ball .mil-choose-text'), .2, {
                 scale: '0',
                 ease: 'sine',
             });
         });
 
         $('a:not(".mil-choose , .mil-more , .mil-drag , .mil-accent-cursor"), input , textarea, .mil-accordion-menu').mouseover(function () {
-            gsap.to($(cursor), {
-                duration: .2,
+            gsap.to($(cursor), .2, {
                 scale: 0,
                 ease: 'sine',
             });
-            gsap.to($('.mil-ball svg'), {
-                duration: .2,
+            gsap.to($('.mil-ball svg'), .2, {
                 scale: 0,
             });
         });
 
         $('a:not(".mil-choose , .mil-more , .mil-drag , .mil-accent-cursor"), input, textarea, .mil-accordion-menu').mouseleave(function () {
-            gsap.to($(cursor), {
-                duration: .2,
+            gsap.to($(cursor), .2, {
                 scale: 1,
                 ease: 'sine',
             });
 
-            gsap.to($('.mil-ball svg'), {
-                duration: .2,
+            gsap.to($('.mil-ball svg'), .2, {
                 scale: 1,
             });
         });
 
-        /* NOTE: body mousedown/mouseup are already bound once above; not re-bound here */
+        $('body').mousedown(function () {
+            gsap.to($(cursor), .2, {
+                scale: .1,
+                ease: 'sine',
+            });
+        });
+        $('body').mouseup(function () {
+            gsap.to($(cursor), .2, {
+                scale: 1,
+                ease: 'sine',
+            });
+        });
         /***************************
 
         main menu
@@ -947,7 +898,6 @@ $(function () {
             $(this).toggleClass('mil-active');
             $(this).next().toggleClass('mil-active');
         });
-
         /***************************
 
         scroll animations
@@ -1056,6 +1006,7 @@ $(function () {
         ***************************/
 
         var mySwiper = new Swiper('.mil-reviews-slider', {
+            // If we need pagination
             pagination: {
                 el: '.mil-revi-pagination',
                 clickable: true,
@@ -1074,9 +1025,6 @@ $(function () {
                 init: function () {
                     applyReviewBulletPhotos();
                 },
-                slideChange: function () {
-                    applyReviewBulletPhotos();
-                },
             },
         })
 
@@ -1089,6 +1037,7 @@ $(function () {
             slidesPerView: 2,
             spaceBetween: 30,
             speed: 5000,
+            autoplay: true,
             autoplay: {
                 delay: 0,
             },
@@ -1112,8 +1061,7 @@ $(function () {
             speed: 800,
             parallax: true,
             mousewheel: {
-                enabled: true,
-                releaseOnEdges: true
+                enable: true
             },
             navigation: {
                 nextEl: '.mil-portfolio-next',
