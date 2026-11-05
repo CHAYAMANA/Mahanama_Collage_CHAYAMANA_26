@@ -111,32 +111,69 @@
 
 .mil-rules-badge {
     display: flex;
-    flex: 0 0 180px;
-    width: 180px;
-    height: 56px;
+    flex: 0 0 auto;
+    width: min(460px, 70vw);
     align-items: center;
     justify-content: center;
-    margin: 0 24px 0 0;
+    margin: 0;
     overflow: visible;
+}
+
+.mil-rules-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .mil-rules-badge img {
     display: block;
     width: 100%;
     height: auto;
-    max-height: 100%;
+    max-height: none;
     object-fit: contain;
     object-position: center;
 }
 
 @media screen and (max-width: 768px) {
     .mil-rules-badge {
-        display: block;
-        flex-basis: 150px;
-        width: 150px;
-        height: 47px;
-        margin: 0 0 18px;
+        width: min(340px, 78vw);
     }
+}
+
+.mil-partners-black {
+    display: flex;
+    min-height: 110px;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.mil-partners-black .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.mil-partners-black .swiper-container {
+    height: 80px;
+}
+
+.mil-partners-black .swiper-wrapper,
+.mil-partners-black .swiper-slide,
+.mil-partners-black .mil-partner-frame {
+    height: 100%;
+}
+
+.mil-partners-black .mil-partner-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mil-partners-black .mil-partner-frame img {
+    max-height: 70px;
+    object-fit: contain;
 }
 
 </style>
@@ -427,16 +464,7 @@ appreciation for photography.</p>
                         <div class="container mil-p-120-0">
 
                             <div class="mil-mb-120">
-                                <div class="row">
-                                    <div class="col-lg-10">
-
-                                        <span class="mil-suptitle mil-light-soft mil-suptitle-right mil-up"><b>CHAYAMAMANA</b> Subbmisions are now available<br>'Physical compitetion registration</span>
-
-                                    </div>
-                                </div>
-
-                                <div class="mil-complex-text justify-content-center mil-up mil-mb-15">
-
+                                <div class="mil-complex-text mil-rules-title justify-content-center mil-up mil-mb-15">
                                     <span class="mil-rules-badge"><img loading="lazy" src="Pics/chayamana logo.png" alt="CHAYAMANA"></span>
                                     <h2 class="mil-h1 mil-muted mil-center">Submissions<span class="mil-thin"> Are Here</span></h2>
 
@@ -446,7 +474,7 @@ appreciation for photography.</p>
                                     
                                     <div class="mil-center mil-up mil-mb-30">
                                         <a data-no-swup href="Yellow and Grey Modern Clean Company Project Proposal.pdf" target="_blank" rel="noopener" class="mil-button mil-arrow-place">
-                                            <span>View PDF</span>
+                                            <span>Click Here For Submissions</span>
                                             <svg viewBox="0 0 128 128" aria-hidden="true">
                                                 <path d="M106.1,41.9c-1.2-1.2-3.1-1.2-4.2,0c-1.2,1.2-1.2,3.1,0,4.2L116.8,61H11.2l14.9-14.9c1.2-1.2,1.2-3.1,0-4.2	c-1.2-1.2-3.1-1.2-4.2,0l-20,20c-1.2,1.2-1.2,3.1,0,4.2l20,20c0.6,0.6,1.4,0.9,2.1,0.9s1.5-0.3,2.1-0.9c1.2-1.2,1.2-3.1,0-4.2	L11.2,67h105.5l-14.9,14.9c-1.2,1.2-1.2,3.1,0,4.2c0.6,0.6,1.4,0.9,2.1,0.9s1.5-0.3,2.1-0.9l20-20c1.2-1.2,1.2-3.1,0-4.2L106.1,41.9	z" />
                                             </svg>
@@ -687,7 +715,7 @@ appreciation for photography.</p>
 
                 <!-- partners -->
 <div class="mil-soft-bg mil-partners-black">
-    <div class="container mil-p-0-120">
+    <div class="container">
                         <div class="swiper-container mil-infinite-show mil-up">
                             
                             <div class="swiper-wrapper">
