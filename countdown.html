@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="Pics/IMG_8922.PNG">
 <title>CHAYAMANA — Registration Opening Soon</title>
 <style>
@@ -291,7 +291,9 @@
         document.getElementById('countdown').style.display = 'none';
         document.getElementById('releasedMsg').style.display = 'block';
 
+        clearInterval(timer);
         var btn = document.getElementById('ctaBtn');
+        if (!btn) return; // already switched to "Register Now"
         var newBtn = document.createElement('a');
         newBtn.href = 'https://docs.google.com/forms/d/e/1FAIpQLSc9yE9lGI3NVYepT7EJzeQDSDDARTqR4iFD-Jla0GFUQQLAmw/viewform?usp=header';
         newBtn.target = '_blank';
@@ -343,9 +345,12 @@
         });
     }
 
+    var timer = null;
     updateCountdown();
     checkPdfLink();
-    var timer = setInterval(updateCountdown, 1000);
+    if (targetDate > Date.now()) {
+      timer = setInterval(updateCountdown, 1000);
+    }
   </script>
 
 </body>
