@@ -21,7 +21,8 @@ $(function () {
     const options = {
         containers: ['#swupMain', '#swupMenu'],
         animateHistoryBrowsing: true,
-        linkSelector: 'a:not([data-no-swup])',
+        // only same-site pages that share the swup layout
+        linkSelector: 'a[href]:not([data-no-swup]):not([target="_blank"]):not([href^="#"]):not([href^="tel:"]):not([href^="mailto:"]):not([href$=".pdf"]):not([href*="countdown.html"]):not([href*="physical-competition.html"]):not([href^="http"])',
         animationSelector: '[class="mil-main-transition"]'
     };
     const swup = new Swup(options);
@@ -32,6 +33,26 @@ $(function () {
 
     ***************************/
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    ScrollTrigger.config({
+        ignoreMobileResize: true
+    });
+
+    // Lazy-loaded images change the page height after ScrollTrigger has
+    // measured it, which left sections invisible / animating at the wrong
+    // place. Re-measure (debounced) whenever an image finishes loading.
+    var refreshTimer;
+    function queueScrollRefresh() {
+        clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(function () {
+            ScrollTrigger.refresh();
+        }, 150);
+    }
+    document.addEventListener('load', function (e) {
+        if (e.target && e.target.tagName === 'IMG') {
+            queueScrollRefresh();
+        }
+    }, true);
+    window.addEventListener('load', queueScrollRefresh);
     /***************************
 
     color variables
@@ -137,7 +158,19 @@ $(function () {
     $(document).on('click', 'a[href^="#"]:not([data-native-anchor])', function (event) {
         event.preventDefault();
 
-        var target = $($.attr(this, 'href'));
+        var href = $.attr(this, 'href');
+        if (!href || href === '#' || href === '#.') {
+            return;
+        }
+
+        var target = $(document.getElementById(href.slice(1)));
+        if (!target.length) {
+            return;
+        }
+
+        // close the mobile menu if the link was inside it
+        $('.mil-menu-btn, .mil-menu, .mil-menu-frame').removeClass('mil-active');
+
         var offset = 0;
 
         if ($(window).width() < 1200) {
@@ -615,9 +648,6 @@ $(function () {
         spaceBetween: 0,
         speed: 800,
         parallax: true,
-        mousewheel: {
-            enable: true
-        },
         navigation: {
             nextEl: '.mil-portfolio-next',
             prevEl: '.mil-portfolio-prev',
@@ -680,17 +710,34 @@ $(function () {
     ----------------------------------------------------------*/
     document.addEventListener("swup:contentReplaced", function () {
 
-        $('html, body').animate({
-            scrollTop: 0,
-        }, 0);
-
-        gsap.to('.mil-progress', {
-            height: 0,
-            ease: 'sine',
-            onComplete: () => {
-                ScrollTrigger.refresh()
-            },
+        ScrollTrigger.getAll().forEach(function (t) {
+            t.kill();
         });
+
+        window.scrollTo(0, 0);
+
+        gsap.set('.mil-progress', {
+            height: 0
+        });
+        gsap.to('.mil-progress', {
+            height: '100%',
+            ease: 'sine',
+            scrollTrigger: {
+                scrub: 0.3
+            }
+        });
+        gsap.to(btt, {
+            x: 0,
+            opacity: 1,
+            ease: 'sine',
+            scrollTrigger: {
+                trigger: "body",
+                start: "top -40%",
+                end: "top -40%",
+                toggleActions: "play none reverse none"
+            }
+        });
+        queueScrollRefresh();
         /***************************
 
          menu
@@ -875,18 +922,6 @@ $(function () {
             });
         });
 
-        $('body').mousedown(function () {
-            gsap.to($(cursor), .2, {
-                scale: .1,
-                ease: 'sine',
-            });
-        });
-        $('body').mouseup(function () {
-            gsap.to($(cursor), .2, {
-                scale: 1,
-                ease: 'sine',
-            });
-        });
         /***************************
 
         main menu
@@ -1060,9 +1095,6 @@ $(function () {
             spaceBetween: 0,
             speed: 800,
             parallax: true,
-            mousewheel: {
-                enable: true
-            },
             navigation: {
                 nextEl: '.mil-portfolio-next',
                 prevEl: '.mil-portfolio-prev',

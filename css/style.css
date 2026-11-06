@@ -19,9 +19,6 @@ body {
   font-weight: 300;
   color: rgba(0, 0, 0, 0.5);
   line-height: 150%;
-  overflow-x: hidden;
-  -ms-scroll-chaining: none;
-      overscroll-behavior: none;
 }
 img,
 svg,
@@ -4038,4 +4035,98 @@ html.is-animating .mil-menu-frame {
   opacity: 0;
   -webkit-transition-delay: 0.3s;
           transition-delay: 0.3s;
+}
+
+/* ==========================================================
+   FIXES – scrolling & mobile (Nov 2026)
+   ========================================================== */
+
+/* 1. Scrolling: html + body both having overflow-x:hidden and
+   overscroll-behavior:none made <body> a non-scrollable scroll box
+   that swallowed wheel/touch scrolling. Clip sideways overflow
+   without creating a scroll container. */
+body {
+  overflow-x: clip;
+}
+
+/* 2. Performance: the full-section backdrop-filter:invert() used to
+   turn dark sections black is very slow on phones (scroll jank).
+   A solid black background gives the identical look. */
+.mil-dark-bg {
+  background-color: rgb(0, 0, 0);
+}
+.mil-dark-bg:before {
+  -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+  background-color: rgb(0, 0, 0);
+}
+
+/* 3. Custom cursor is useless (and follows taps) on touch screens */
+@media (hover: none), (pointer: coarse) {
+  .mil-ball {
+    display: none !important;
+  }
+}
+
+/* 4. Map: on phones an embedded map traps your finger and stops page
+   scrolling. Let touches pass through – tapping opens Google Maps. */
+.mil-map-frame {
+  width: 100%;
+}
+.mil-map-frame iframe {
+  pointer-events: none;
+}
+@media screen and (max-width: 768px) {
+  .mil-map-frame {
+    height: 320px;
+  }
+}
+
+/* 5. Mobile menu: let it scroll if it is taller than the screen,
+   and use the real visible height on iOS/Android */
+.mil-menu-frame {
+  height: 100vh;
+  height: 100dvh;
+}
+@media screen and (max-width: 1200px) {
+  .mil-menu-frame.mil-active {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
+/* 6. Buttons: long labels ran off the right edge on phones */
+@media screen and (max-width: 576px) {
+  .mil-button {
+    max-width: 100%;
+    height: auto;
+    min-height: 60px;
+    padding: 10px 10px 10px 24px;
+    letter-spacing: 1px;
+    font-size: 11px;
+    text-align: left;
+  }
+  .mil-button span {
+    white-space: normal;
+  }
+  .mil-button svg {
+    margin-left: 14px;
+    flex: 0 0 40px;
+  }
+  .mil-button.mil-icon-button {
+    padding: 15px;
+  }
+  .mil-competition-links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mil-competition-links .mil-button {
+    justify-content: space-between;
+  }
+}
+
+/* 7. Make sure nothing pushes the page wider than the screen */
+img {
+  max-width: 100%;
 }
